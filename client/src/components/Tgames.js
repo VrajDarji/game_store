@@ -31,7 +31,7 @@ function Tgames() {
         <h1 className="uppercase text-4xl tracking-wide font-bold text-white">
           trending games
         </h1>
-        <Link to={"/shop/games"}>
+        <Link to={"/shop/game"}>
           <button className="uppercase px-3 py-2 bg-white text-[#8858ed] rounded-3xl font-semibold">
             view all
           </button>

@@ -7,9 +7,12 @@ const links = [
   { link: "/contact us", t: "contact us" },
 ];
 
-function Nav() {
+function Nav({ r }) {
   return (
-    <div className="w-full h-[10vh] flex px-20 justify-between items-center bg-gradient-to-r from-[#281842] to-[#2c0532] text-white capitalize">
+    <div
+      className="w-full h-[10vh] flex px-20 justify-between items-center bg-gradient-to-r from-[#281842] to-[#2c0532] text-white capitalize"
+      ref={r}
+    >
       <Link to={"/"}>
         <h1 className="uppercase text-[5vh] tracking-wider font-semibold">
           arcade

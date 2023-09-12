@@ -12,7 +12,7 @@ import UpGear from "../components/UpGear";
 function Home() {
   return (
     <>
-      <Nav />
+      <Nav from="" to="" />
       <Hmain />
       <BSell />
       <SbyCat />

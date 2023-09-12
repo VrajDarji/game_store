@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 const products = [
-  { link: "/shop/games", t: "games" },
+  { link: "/shop/game", t: "games" },
   { link: "/shop/console", t: "console" },
   { link: "/shop/controllers", t: "controllers" },
   { link: "/shop/acc", t: "accessories" },

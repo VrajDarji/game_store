@@ -11,7 +11,7 @@ function Games() {
         <p className="capitalize text-lg font-medium">
           now available on PC & console
         </p>
-        <Link to={"/shop/games"}>
+        <Link to={"/shop/game"}>
           <button className="px-3 py-1 flex justify-center items-center text-lg font-semibold mt-2 rounded-3xl border-2 border-white bg-white capitalize text-[#8858ed] hover:bg-[#8858ed] hover:text-white btn">
             shop now
           </button>
