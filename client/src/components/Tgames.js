@@ -9,7 +9,7 @@ function Tgames() {
         "Content-Type": "application/json",
       },
     };
-    const url = "http://localhost:8080/api/v1/data";
+    const url = "https://game-store-server.onrender.com/api/v1/data";
     const response = await fetch(url, options);
     try {
       if (response.ok) {
