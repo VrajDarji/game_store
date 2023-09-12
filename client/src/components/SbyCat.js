@@ -19,7 +19,7 @@ const sbc = [
 
 function SbyCat() {
   return (
-    <div className="w-[100vw] h-[100vh] py-10 px-20 bg-[#232223] flex flex-col gap-6 text-white">
+    <div className="w-full h-[100vh] py-10 px-20 bg-[#232223] flex flex-col gap-6 text-white">
       <h1 className="text-5xl uppercase font-bold tracking-wide">
         shop by category
       </h1>
@@ -33,10 +33,13 @@ function SbyCat() {
                     src={e.img}
                     alt=""
                     className="object-cover hover:scale-110 btn rounded-2xl"
+                    loading="lazy"
                   />
                 </div>
               </div>
-              <p className="text-center capitalize font-xl font-semibold">{e.t}</p>
+              <p className="text-center capitalize font-xl font-semibold">
+                {e.t}
+              </p>
             </Link>
           );
         })}

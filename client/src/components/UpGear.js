@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
-function BSell() {
+function UpGear() {
   const [p, setP] = useState([]);
   const fetchData = async () => {
     const options = {
@@ -15,7 +14,7 @@ function BSell() {
     try {
       if (response.ok) {
         const result = await response.json();
-        const a = result.filter((e, index) => index % 2 === 0);
+        const a = result.filter((e) => e.tag === "acc");
         setP(a);
         console.log(a);
       }
@@ -30,9 +29,9 @@ function BSell() {
     <div className="h-[100vh] w-full bg-[#060506] pt-[20vh] px-20 flex flex-col gap-10 ">
       <div className="flex justify-between items-center">
         <h1 className="uppercase text-4xl tracking-wide font-bold text-white">
-          best sellers
+          upgrade your gear
         </h1>
-        <Link to={"/shop/bestsellers"}>
+        <Link to={"/shop/acc"}>
           <button className="uppercase px-3 py-2 bg-white text-[#8858ed] rounded-3xl font-semibold">
             view all
           </button>
@@ -78,4 +77,4 @@ function BSell() {
     </div>
   );
 }
-export default BSell;
+export default UpGear;
