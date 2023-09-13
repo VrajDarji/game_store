@@ -13,8 +13,8 @@ const dataSchema = new mongoose.Schema({
   sale: Boolean,
   sale_price: Number,
 });
-
-const Data = mongoose.model("Sata", dataSchema, "data");
+const Data = mongoose.model("Data", dataSchema, "data");
+const Cart = mongoose.model("Cart", dataSchema);
 const server = async () => {
   await mongoose
     .connect(
@@ -38,6 +38,42 @@ app.get("/api/v1/data", async (req, res) => {
   try {
     const a = await Data.find();
     res.json(a);
+  } catch (err) {
+    console.error(err);
+  }
+});
+app.post("/api/v1/cart", async (req, res) => {
+  const a = req.body;
+  try {
+    const s = new Cart({
+      name: a?.name,
+      price: a?.price,
+      img: a?.img,
+      tag: a?.tag,
+      sale: a?.sale,
+      sale_price: a?.sale_price,
+    });
+    const q = await s.save();
+    res.json(q);
+  } catch (err) {
+    console.error(err);
+  }
+});
+app.get("/api/v1/cart", async (req, res) => {
+  try {
+    const a = await Cart.find();
+    res.json(a);
+  } catch (err) {
+    console.error(err);
+  }
+});
+app.delete("/api/v1/cart/:id", async (req, res) => {
+  const a = req.params.id;
+  const d = await Cart.findByIdAndDelete(a);
+  try {
+    if (d) {
+      console.log("deleted", d);
+    }
   } catch (err) {
     console.error(err);
   }

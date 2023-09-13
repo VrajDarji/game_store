@@ -27,6 +27,25 @@ function Card() {
       console.log(err);
     }
   };
+  const SendData = async (data) => {
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    };
+    const url = "http://localhost:8080/api/v1/cart";
+    const response = await fetch(url, options);
+    try {
+      if (response.ok) {
+        const r = await response.json();
+        console.log("data Sended", r);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
   useEffect(() => {
     r.current.style.background = "#060506";
     fetchData();
@@ -77,8 +96,13 @@ function Card() {
                 <p className="text-2xl font-base">${p.price}</p>
               )}
               <p>Quantity</p>
-              <button className="w-[60%] py-2 rounded-3xl bg-[#8858ef] capitalize font-medium text-white ">
-                add to cart{" "}
+              <button
+                className="w-[60%] py-2 rounded-3xl bg-[#8858ef] capitalize font-medium text-white "
+                onClick={() => {
+                  SendData(p);
+                }}
+              >
+                add to cart
               </button>
             </div>
           </div>

@@ -57,6 +57,26 @@ function Shop() {
       console.log(err);
     }
   };
+  const SendData = async (data) => {
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    };
+    const url = "http://localhost:8080/api/v1/cart";
+    const response = await fetch(url, options);
+    try {
+      if (response.ok) {
+        const r = await response.json();
+        console.log("data Sended", r);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   useEffect(() => {
     r.current.style.background = "#060506";
     fetchData(pa);
@@ -203,13 +223,13 @@ function Shop() {
                 <>
                   {p.map((e) => {
                     return (
-                      <Link to={`/product/${e._id}`}>
-                        <div className="relative text-white max-w-full flex flex-col justify-center items-center gap-1">
-                          {e.sale ? (
-                            <div className="absolute top-0 left-0 px-2 py-1 bg-[#8858ef] text-white z-10">
-                              <p className="capitalize text-xs">sale</p>
-                            </div>
-                          ) : null}
+                      <div className="relative text-white max-w-full flex flex-col justify-center items-center gap-1">
+                        {e.sale ? (
+                          <div className="absolute top-0 left-0 px-2 py-1 bg-[#8858ef] text-white z-10">
+                            <p className="capitalize text-xs">sale</p>
+                          </div>
+                        ) : null}
+                        <Link to={`/product/${e._id}`} className="w-full">
                           <div className="w-full aspect-square overflow-hidden">
                             <img
                               src={e.img}
@@ -218,24 +238,30 @@ function Shop() {
                               loading="lazy"
                             />
                           </div>
-                          <h1 className="text-semibold tracking-wide text-xl mt-2">
-                            {e.name}
-                          </h1>
-                          {e.sale ? (
-                            <div className="flex gap-3 text-sm text-[#ccc] justify-center items-center">
-                              <p className="line-through">${e.price}</p>
-                              <p>${e.sale_price}</p>
-                            </div>
-                          ) : (
-                            <>
-                              <p className="text-[#ccc] text-sm">${e.price}</p>
-                            </>
-                          )}
-                          <button className="mt-2 w-[90%] bg-[#8858ef] py-1 rounded-3xl text-base capitalize font-semibold">
-                            add to cart
-                          </button>
-                        </div>
-                      </Link>
+                        </Link>
+                        <h1 className="text-semibold tracking-wide text-xl mt-2">
+                          {e.name}
+                        </h1>
+                        {e.sale ? (
+                          <div className="flex gap-3 text-sm text-[#ccc] justify-center items-center">
+                            <p className="line-through">${e.price}</p>
+                            <p>${e.sale_price}</p>
+                          </div>
+                        ) : (
+                          <>
+                            <p className="text-[#ccc] text-sm">${e.price}</p>
+                          </>
+                        )}
+                        <button
+                          className="mt-2 w-[90%] bg-[#8858ef] py-1 rounded-3xl text-base capitalize font-semibold"
+                          onClick={() => {
+                            SendData(e);
+                            console.log(e);
+                          }}
+                        >
+                          add to cart
+                        </button>
+                      </div>
                     );
                   })}
                 </>

@@ -27,7 +27,13 @@ html::-webkit-scrollbar {
 .overflow-x-scroll::-webkit-scrollbar {
   display: none;
 }
-.overflow-x-scroll{
+.overflow-x-scroll {
+  scroll-behavior: smooth;
+}
+.overflow-y-scroll::-webkit-scrollbar {
+  display: none;
+}
+.overflow-y-scroll {
   scroll-behavior: smooth;
 }
 .pbg2 {
@@ -58,4 +64,7 @@ html::-webkit-scrollbar {
   100% {
     background-color: hsl(3005, 0%, 15%);
   }
+}
+.cart {
+  transition: width 0.4s ease;
 }

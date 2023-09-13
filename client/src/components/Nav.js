@@ -1,5 +1,7 @@
 import { ShoppingCart } from "lucide-react";
 import { Link } from "react-router-dom";
+import Cart from "./Cart";
+import { useRef } from "react";
 
 const links = [
   { link: "/shop/shop all", t: "products" },
@@ -8,31 +10,41 @@ const links = [
 ];
 
 function Nav({ r }) {
+  const c = useRef(null);
   return (
-    <div
-      className="w-full h-[10vh] flex px-20 justify-between items-center bg-gradient-to-r from-[#281842] to-[#2c0532] text-white capitalize"
-      ref={r}
-    >
-      <Link to={"/"}>
-        <h1 className="uppercase text-[5vh] tracking-wider font-semibold">
-          arcade
-        </h1>
-      </Link>
-      <div className="flex flex-row gap-5">
-        {links.map((e) => {
-          const { link, t } = e;
-          return (
-            <Link to={link}>
-              <p className="font-light tracking-tight">{t}</p>
-            </Link>
-          );
-        })}
-        <button className="capitalize font-light tracking-tight">log in</button>
-        <button>
-          <ShoppingCart size={20} />
-        </button>
+    <>
+      <div
+        className="w-full h-[10vh] flex px-20 justify-between items-center bg-gradient-to-r from-[#281842] to-[#2c0532] text-white capitalize"
+        ref={r}
+      >
+        <Link to={"/"}>
+          <h1 className="uppercase text-[5vh] tracking-wider font-semibold">
+            arcade
+          </h1>
+        </Link>
+        <div className="flex flex-row gap-5">
+          {links.map((e) => {
+            const { link, t } = e;
+            return (
+              <Link to={link}>
+                <p className="font-light tracking-tight">{t}</p>
+              </Link>
+            );
+          })}
+          <button className="capitalize font-light tracking-tight">
+            log in
+          </button>
+          <button
+            onClick={() => {
+              c.current.style.width = "22vw";
+            }}
+          >
+            <ShoppingCart size={20} />
+          </button>
+        </div>
       </div>
-    </div>
+      <Cart re={c} />
+    </>
   );
 }
 export default Nav;
