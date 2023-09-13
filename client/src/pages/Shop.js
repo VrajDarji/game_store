@@ -23,6 +23,7 @@ function Shop() {
   const [c, setC] = useState(false);
   const [pr, setPr] = useState(false);
   const [sr, setSr] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [s, setS] = useState("Sort By");
   const fetchData = async (pa) => {
     const options = {
@@ -48,6 +49,7 @@ function Shop() {
           const a = result.filter((e) => e.tag === pa);
           setP(a);
         }
+        setLoading(false);
         console.log(p);
       }
     } catch (err) {
@@ -92,6 +94,7 @@ function Shop() {
                     <p
                       onClick={() => {
                         setPa(e.tag);
+                        setLoading(true);
                         setS("sort by");
                       }}
                       className="cursor-pointer hover:text-[#ccc]"
@@ -181,41 +184,59 @@ function Shop() {
               ) : null}
             </div>
             <div className="grid grid-cols-3 gap-5">
-              {p.map((e) => {
-                return (
-                  <div className="relative text-white max-w-full flex flex-col justify-center items-center gap-1">
-                    {e.sale ? (
-                      <div className="absolute top-0 left-0 px-2 py-1 bg-[#8858ef] text-white z-10">
-                        <p className="capitalize text-xs">sale</p>
+              {loading ? (
+                <>
+                  {Array(6)
+                    .fill(0)
+                    .map((e, index) => (
+                      <div
+                        key={index}
+                        className="min-w-[20vw] h-[23vw] bg-[hsl(300,7%,7%)] rounded-xl flex flex-col gap-2 px-3 py-3"
+                      >
+                        <div className="min-h-[16vw] rounded-lg bg-[hsl(300,0%,10%)] sk"></div>
+                        <div className="min-h-[5vw] rounded-lg bg-[hsl(300,0%,10%)] sk"></div>
                       </div>
-                    ) : null}
-                    <div className="w-full aspect-square overflow-hidden">
-                      <img
-                        src={e.img}
-                        alt=""
-                        className="w-full object-cover hover:scale-125 btn"
-                        loading="lazy"
-                      />
-                    </div>
-                    <h1 className="text-semibold tracking-wide text-xl mt-2">
-                      {e.name}
-                    </h1>
-                    {e.sale ? (
-                      <div className="flex gap-3 text-sm text-[#ccc] justify-center items-center">
-                        <p className="line-through">${e.price}</p>
-                        <p>${e.sale_price}</p>
+                    ))}
+                </>
+              ) : (
+                <>
+                  {p.map((e) => {
+                    return (
+                      <div className="relative text-white max-w-full flex flex-col justify-center items-center gap-1">
+                        {e.sale ? (
+                          <div className="absolute top-0 left-0 px-2 py-1 bg-[#8858ef] text-white z-10">
+                            <p className="capitalize text-xs">sale</p>
+                          </div>
+                        ) : null}
+                        <div className="w-full aspect-square overflow-hidden">
+                          <img
+                            src={e.img}
+                            alt=""
+                            className="w-full object-cover hover:scale-125 btn"
+                            loading="lazy"
+                          />
+                        </div>
+                        <h1 className="text-semibold tracking-wide text-xl mt-2">
+                          {e.name}
+                        </h1>
+                        {e.sale ? (
+                          <div className="flex gap-3 text-sm text-[#ccc] justify-center items-center">
+                            <p className="line-through">${e.price}</p>
+                            <p>${e.sale_price}</p>
+                          </div>
+                        ) : (
+                          <>
+                            <p className="text-[#ccc] text-sm">${e.price}</p>
+                          </>
+                        )}
+                        <button className="mt-2 w-[90%] bg-[#8858ef] py-1 rounded-3xl text-base capitalize font-semibold">
+                          add to cart
+                        </button>
                       </div>
-                    ) : (
-                      <>
-                        <p className="text-[#ccc] text-sm">${e.price}</p>
-                      </>
-                    )}
-                    <button className="mt-2 w-[90%] bg-[#8858ef] py-1 rounded-3xl text-base capitalize font-semibold">
-                      add to cart
-                    </button>
-                  </div>
-                );
-              })}
+                    );
+                  })}
+                </>
+              )}
             </div>
           </div>
         </div>
