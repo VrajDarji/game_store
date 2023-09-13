@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 import { ChevronDown, MinusIcon, PlusIcon } from "lucide-react";
@@ -202,37 +203,39 @@ function Shop() {
                 <>
                   {p.map((e) => {
                     return (
-                      <div className="relative text-white max-w-full flex flex-col justify-center items-center gap-1">
-                        {e.sale ? (
-                          <div className="absolute top-0 left-0 px-2 py-1 bg-[#8858ef] text-white z-10">
-                            <p className="capitalize text-xs">sale</p>
+                      <Link to={`/product/${e._id}`}>
+                        <div className="relative text-white max-w-full flex flex-col justify-center items-center gap-1">
+                          {e.sale ? (
+                            <div className="absolute top-0 left-0 px-2 py-1 bg-[#8858ef] text-white z-10">
+                              <p className="capitalize text-xs">sale</p>
+                            </div>
+                          ) : null}
+                          <div className="w-full aspect-square overflow-hidden">
+                            <img
+                              src={e.img}
+                              alt=""
+                              className="w-full object-cover hover:scale-125 btn"
+                              loading="lazy"
+                            />
                           </div>
-                        ) : null}
-                        <div className="w-full aspect-square overflow-hidden">
-                          <img
-                            src={e.img}
-                            alt=""
-                            className="w-full object-cover hover:scale-125 btn"
-                            loading="lazy"
-                          />
+                          <h1 className="text-semibold tracking-wide text-xl mt-2">
+                            {e.name}
+                          </h1>
+                          {e.sale ? (
+                            <div className="flex gap-3 text-sm text-[#ccc] justify-center items-center">
+                              <p className="line-through">${e.price}</p>
+                              <p>${e.sale_price}</p>
+                            </div>
+                          ) : (
+                            <>
+                              <p className="text-[#ccc] text-sm">${e.price}</p>
+                            </>
+                          )}
+                          <button className="mt-2 w-[90%] bg-[#8858ef] py-1 rounded-3xl text-base capitalize font-semibold">
+                            add to cart
+                          </button>
                         </div>
-                        <h1 className="text-semibold tracking-wide text-xl mt-2">
-                          {e.name}
-                        </h1>
-                        {e.sale ? (
-                          <div className="flex gap-3 text-sm text-[#ccc] justify-center items-center">
-                            <p className="line-through">${e.price}</p>
-                            <p>${e.sale_price}</p>
-                          </div>
-                        ) : (
-                          <>
-                            <p className="text-[#ccc] text-sm">${e.price}</p>
-                          </>
-                        )}
-                        <button className="mt-2 w-[90%] bg-[#8858ef] py-1 rounded-3xl text-base capitalize font-semibold">
-                          add to cart
-                        </button>
-                      </div>
+                      </Link>
                     );
                   })}
                 </>
