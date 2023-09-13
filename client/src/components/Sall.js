@@ -8,7 +8,7 @@ function Sall() {
       <p className="text-xl text-white font-medium">
         Save on selected products and save
       </p>
-      <Link to={"/shop/sale"}>
+      <Link to={"/shop/on sale"}>
         <button className="mt-2 px-5 bg-[#8858ef] py-2 rounded-3xl text-base text-white capitalize font-semibold hover:bg-white hover:text-[#8858ef] btn">
           shop now
         </button>
