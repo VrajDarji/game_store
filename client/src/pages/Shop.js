@@ -7,7 +7,7 @@ const category = [
   { tag: "shop all", t: "all" },
   { tag: "console", t: "consoles" },
   { tag: "game", t: "games" },
-  { tag: "contollers", t: "controllers" },
+  { tag: "controllers", t: "controllers" },
   { tag: "acc", t: "Accessories" },
   { tag: "on sale", t: "on sale" },
   { tag: "bestsellers", t: "best sellers" },
