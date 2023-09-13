@@ -1,13 +1,13 @@
 import { useState, useEffect, useRef } from "react";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
-import { MinusIcon, PlusIcon } from "lucide-react";
+import { ChevronDown, MinusIcon, PlusIcon } from "lucide-react";
 
 const category = [
   { tag: "shop all", t: "all" },
   { tag: "console", t: "consoles" },
   { tag: "game", t: "games" },
-  { tag: "contollers", t: "controllers" },
+  { tag: "controllers", t: "controllers" },
   { tag: "acc", t: "Accessories" },
   { tag: "on sale", t: "on sale" },
   { tag: "bestsellers", t: "best sellers" },
@@ -22,6 +22,8 @@ function Shop() {
   const r = useRef(null);
   const [c, setC] = useState(false);
   const [pr, setPr] = useState(false);
+  const [sr, setSr] = useState(false);
+  const [s, setS] = useState("Sort By");
   const fetchData = async (pa) => {
     const options = {
       method: "GET",
@@ -62,7 +64,7 @@ function Shop() {
       <Nav r={r} />
       <div className="px-20 flex flex-col gap-5 w-full bg-[#060506] text-white">
         <div className="py-10">
-          <h1 className="text-[4rem] font-semibold uppercase">{path}</h1>
+          <h1 className="text-[4rem] font-semibold uppercase">{pa}</h1>
         </div>
         <div className="grid g2">
           <div className="flex flex-col gap-2">
@@ -90,8 +92,9 @@ function Shop() {
                     <p
                       onClick={() => {
                         setPa(e.tag);
+                        setS("sort by");
                       }}
-                      className="cursor-pointer"
+                      className="cursor-pointer hover:text-[#ccc]"
                     >
                       {e.t}
                     </p>
@@ -120,7 +123,63 @@ function Shop() {
             </div>
           </div>
           <div className="flex flex-col gap-1">
-            <div className="w-full flex items-center justify-end py-2 "></div>
+            <div className="w-full items-end py-2 flex flex-col relative">
+              <div
+                className="w-[12vw] px-3 py-1 border-2  flex justify-between items-center cursor-pointer"
+                onClick={() => {
+                  setSr(!sr);
+                }}
+              >
+                <h1 className="capitalize text-base">{s}</h1>
+                <button>
+                  <ChevronDown size={20} />
+                </button>
+              </div>
+              {sr ? (
+                <div className="absolute right-0 top-[3rem] z-50 py-1 w-[12vw] bg-[#060506] text-white flex flex-col gap-2 border-2 cursor-pointer">
+                  <p
+                    className="px-3 py-1 hover:bg-[#242324]"
+                    onClick={(e) => {
+                      setS(e.target.innerText);
+                      setSr(false);
+                      p.sort((a, b) => a.price - b.price);
+                    }}
+                  >
+                    Price(low to high)
+                  </p>
+                  <p
+                    className="px-3 py-1 hover:bg-[#242324]"
+                    onClick={(e) => {
+                      setS(e.target.innerText);
+                      setSr(false);
+                      p.sort((a, b) => b.price - a.price);
+                    }}
+                  >
+                    Price(high to low)
+                  </p>
+                  <p
+                    className="px-3 py-1 hover:bg-[#242324]"
+                    onClick={(e) => {
+                      setS(e.target.innerText);
+                      setSr(false);
+                      p.sort((a, b) => a.name.localeCompare(b.name));
+                    }}
+                  >
+                    Name A-Z
+                  </p>
+                  <p
+                    className="px-3 py-1 hover:bg-[#242324]"
+                    onClick={(e) => {
+                      setS(e.target.innerText);
+                      setSr(false);
+                      p.sort((a, b) => b.name.localeCompare(a.name));
+                    }}
+                  >
+                    Name Z-A
+                  </p>
+                </div>
+              ) : null}
+            </div>
             <div className="grid grid-cols-3 gap-5">
               {p.map((e) => {
                 return (
