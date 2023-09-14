@@ -1,7 +1,8 @@
 import { ShoppingCart } from "lucide-react";
 import { Link } from "react-router-dom";
 import Cart from "./Cart";
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
+import { auth } from "../Auth/Firebase";
 
 const links = [
   { link: "/shop/shop all", t: "products" },
@@ -11,6 +12,14 @@ const links = [
 
 function Nav({ r }) {
   const c = useRef(null);
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    const us = auth.currentUser;
+    console.log(us);
+    if (us) {
+      setUser(us.displayName);
+    }
+  }, [user]);
   return (
     <>
       <div
@@ -31,9 +40,11 @@ function Nav({ r }) {
               </Link>
             );
           })}
-          <button className="capitalize font-light tracking-tight">
-            log in
-          </button>
+          <Link to={"/signin"}>
+            <button className="capitalize font-light tracking-tight">
+              {user === null ? `log in` : user}
+            </button>
+          </Link>
           <button
             onClick={() => {
               c.current.style.width = "22vw";

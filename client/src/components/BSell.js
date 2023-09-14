@@ -25,6 +25,25 @@ function BSell() {
       console.log(err);
     }
   };
+  const SendData = async (data) => {
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    };
+    const url = "https://game-store-server.onrender.com/api/v1/cart";
+    const response = await fetch(url, options);
+    try {
+      if (response.ok) {
+        const r = await response.json();
+        console.log("data Sended", r);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
   useEffect(() => {
     fetchData();
   }, []);
@@ -59,8 +78,8 @@ function BSell() {
           <>
             {p.map((e) => {
               return (
-                <Link to={`/product/${e._id}`}>
-                  <div className="relative text-white max-w-[20vw] flex flex-col justify-center items-center gap-1">
+                <div className="relative text-white max-w-[20vw] flex flex-col justify-center items-center gap-1">
+                  <Link to={`/product/${e._id}`} className="text-center">
                     {e.sale ? (
                       <div className="absolute top-0 left-0 px-2 py-1 bg-[#8858ef] text-white z-10">
                         <p className="capitalize text-xs">sale</p>
@@ -74,6 +93,7 @@ function BSell() {
                         loading="lazy"
                       />
                     </div>
+
                     <h1 className="text-semibold tracking-wide text-xl mt-2">
                       {e.name}
                     </h1>
@@ -87,11 +107,16 @@ function BSell() {
                         <p className="text-[#ccc] text-sm">${e.price}</p>
                       </>
                     )}
-                    <button className="mt-2 w-[90%] bg-[#8858ef] py-1 rounded-3xl text-base capitalize font-semibold">
-                      add to cart
-                    </button>
-                  </div>
-                </Link>
+                  </Link>
+                  <button
+                    className="mt-2 w-[90%] bg-[#8858ef] py-1 rounded-3xl text-base capitalize font-semibold"
+                    onClick={() => {
+                      SendData(e);
+                    }}
+                  >
+                    add to cart
+                  </button>
+                </div>
               );
             })}
           </>

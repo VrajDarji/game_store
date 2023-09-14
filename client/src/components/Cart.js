@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 function Cart({ re }) {
   const [p, setP] = useState([]);
   const [sub, setSub] = useState(0);
+  const [loading, setLoading] = useState(true);
   const fetchData = async () => {
     const options = {
       method: "GET",
@@ -17,8 +18,11 @@ function Cart({ re }) {
       if (response.ok) {
         const r = await response.json();
         setP(r);
+        setLoading(false);
         var t = 0.0;
-        console.log("data Sended", r);
+        const a = r.map((e) => (t = t + e.price));
+        console.log(t);
+        setSub(t.toFixed(2));
       }
     } catch (err) {
       console.error(err);
@@ -63,35 +67,57 @@ function Cart({ re }) {
           Cart
         </p>
       </div>
-      <div className="w-full h-[74vh] overflow-y-scroll flex flex-col gap-1">
-        {p.length === 0 ? (
-          <>
-            <p className="w-full py-2 text-xl font-medium px-4">
-              Cart is Empty{" "}
-            </p>
-          </>
-        ) : (
-          <>
-            {p.map((e) => {
+      {loading ? (
+        <div className="w-full h-[74vh] overflow-y-scroll flex flex-col gap-1">
+          {Array(6)
+            .fill(0)
+            .map((e) => {
               return (
                 <div className="w-full h-[13vh] px-2 py-1 flex flex-row justify-between items-center">
-                  <div className="h-full flex flex-row gap-2">
-                    <img src={e.img} alt="" className="h-full" />
-                    <div className="flex flex-col gap-1">
-                      <p className="font-medium capitalize text-lg">{e.name}</p>
-                      <p>${e.price}</p>
-                      <p>Qty:1</p>
-                    </div>
+                  <div className="h-full flex flex-row gap-2 w-full bg-[hsl(300,7%,7%)] rounded-xl px-2 py-2">
+                    <div className="w-[30%] bg-white h-full rounded-lg sk"></div>
+                    <div className="w-[74%] bg-white h-full rounded-lg sk"></div>
                   </div>
-                  <button onClick={() => deleteData(e._id)}>
-                    <X />
-                  </button>
                 </div>
               );
             })}
-          </>
-        )}
-      </div>
+        </div>
+      ) : (
+        <>
+          <div className="w-full h-[74vh] overflow-y-scroll flex flex-col gap-1">
+            {p.length === 0 ? (
+              <>
+                <p className="w-full py-2 text-xl font-medium px-4">
+                  Cart is Empty
+                </p>
+              </>
+            ) : (
+              <>
+                {p.map((e) => {
+                  return (
+                    <div className="w-full h-[13vh] px-2 py-1 flex flex-row justify-between items-center">
+                      <div className="h-full flex flex-row gap-2">
+                        <img src={e.img} alt="" className="h-full" />
+                        <div className="flex flex-col gap-1">
+                          <p className="font-medium capitalize text-lg">
+                            {e.name}
+                          </p>
+                          <p>${e.price}</p>
+                          <p>Qty:1</p>
+                        </div>
+                      </div>
+                      <button onClick={() => deleteData(e._id)}>
+                        <X />
+                      </button>
+                    </div>
+                  );
+                })}
+              </>
+            )}
+          </div>
+        </>
+      )}
+
       <div className="absolute bottom-0 min-w-full bg-[hsl(300,4%,10%)] flex flex-col px-4 py-2 gap-2">
         <p className="w-full border-b-2 text-xl tracking-wide">
           SubTotal : ${sub}

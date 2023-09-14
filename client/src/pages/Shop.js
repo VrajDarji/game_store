@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 import { ChevronDown, MinusIcon, PlusIcon } from "lucide-react";
+import Cart from "../components/Cart";
 
 const category = [
   { tag: "shop all", t: "all" },
@@ -26,6 +27,7 @@ function Shop() {
   const [sr, setSr] = useState(false);
   const [loading, setLoading] = useState(true);
   const [s, setS] = useState("Sort By");
+  const ca = useRef(null);
   const fetchData = async (pa) => {
     const options = {
       method: "GET",
@@ -257,6 +259,7 @@ function Shop() {
                           onClick={() => {
                             SendData(e);
                             console.log(e);
+                            ca.current.style.width = "22vw";
                           }}
                         >
                           add to cart
@@ -271,6 +274,7 @@ function Shop() {
         </div>
       </div>
       <Footer />
+      <Cart re={ca} />
     </>
   );
 }

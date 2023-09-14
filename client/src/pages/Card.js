@@ -1,11 +1,13 @@
 import { useState, useEffect, useRef } from "react";
 import Nav from "../components/Nav";
+import Cart from "../components/Cart";
 import Footer from "../components/Footer";
 function Card() {
   const a = window.location.pathname.replace("/product/", "");
   const [p, setP] = useState([]);
   const [loading, setLoading] = useState(true);
   const r = useRef(null);
+  const c = useRef(null);
   const fetchData = async () => {
     const options = {
       method: "GET",
@@ -35,7 +37,7 @@ function Card() {
       },
       body: JSON.stringify(data),
     };
-    const url = "http://localhost:8080/api/v1/cart";
+    const url = "https://game-store-server.onrender.com/api/v1/cart";
     const response = await fetch(url, options);
     try {
       if (response.ok) {
@@ -100,6 +102,7 @@ function Card() {
                 className="w-[60%] py-2 rounded-3xl bg-[#8858ef] capitalize font-medium text-white "
                 onClick={() => {
                   SendData(p);
+                  c.current.style.width = "22vw";
                 }}
               >
                 add to cart
@@ -110,6 +113,7 @@ function Card() {
       )}
 
       <Footer />
+      <Cart re={c} />
     </>
   );
 }
