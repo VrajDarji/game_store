@@ -65,7 +65,7 @@ function Shop() {
       },
       body: JSON.stringify(data),
     };
-    const url = "http://localhost:8080/api/v1/cart";
+    const url = "https://game-store-server.onrender.com/api/v1/cart";
     const response = await fetch(url, options);
     try {
       if (response.ok) {
