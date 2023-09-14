@@ -21,7 +21,7 @@ function Nav({ r }) {
       },
       body: JSON.stringify(data),
     };
-    const url = "http://localhost:8080/api/v1/currentuser";
+    const url = "https://game-store-server.onrender.com/api/v1/currentuser";
     const response = await fetch(url, options);
     try {
       if (response.ok) {
