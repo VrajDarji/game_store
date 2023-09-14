@@ -13,13 +13,40 @@ const links = [
 function Nav({ r }) {
   const c = useRef(null);
   const [user, setUser] = useState(null);
+  const sendCuser = async (data) => {
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    };
+    const url = "http://localhost:8080/api/v1/currentuser";
+    const response = await fetch(url, options);
+    try {
+      if (response.ok) {
+        console.log("user sended", data);
+      } else {
+        console.log("failed");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
   useEffect(() => {
     const us = auth.currentUser;
+    sendCuser(us);
     console.log(us);
     if (us) {
       setUser(us.displayName);
     }
   }, [user]);
+  useEffect(() => {
+    const us = auth.currentUser;
+    if (us) {
+      setUser(us.displayName);
+    }
+  });
   return (
     <>
       <div

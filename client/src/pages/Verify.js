@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import { Link } from "react-router-dom";
 class Verify extends Component {
   componentDidMount() {
     window.history.pushState(null, null, document.URL);
@@ -18,6 +18,7 @@ class Verify extends Component {
     return (
       <div>
         <p>Verify yourself</p>
+        <Link to={"https://mail.google.com/"}>Open Mail</Link>
       </div>
     );
   }

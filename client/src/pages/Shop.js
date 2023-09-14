@@ -4,7 +4,7 @@ import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 import { ChevronDown, MinusIcon, PlusIcon } from "lucide-react";
 import Cart from "../components/Cart";
-
+import { auth } from "../Auth/Firebase";
 const category = [
   { tag: "shop all", t: "all" },
   { tag: "console", t: "consoles" },
@@ -21,6 +21,7 @@ function Shop() {
     .replace("%20", " ");
   const [p, setP] = useState([]);
   const [pa, setPa] = useState(path);
+  const [user, setUser] = useState("");
   const r = useRef(null);
   const [c, setC] = useState(false);
   const [pr, setPr] = useState(false);
@@ -53,7 +54,6 @@ function Shop() {
           setP(a);
         }
         setLoading(false);
-        console.log(p);
       }
     } catch (err) {
       console.log(err);
@@ -78,12 +78,32 @@ function Shop() {
       console.error(err);
     }
   };
-
+  const fetchUser = async () => {
+    const options = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const url = "http://localhost:8080/api/v1/currentuser";
+    const response = await fetch(url, options);
+    try {
+      const result = await response.json();
+      setUser(result?.uid);
+    } catch (err) {
+      console.error(err);
+    }
+  };
   useEffect(() => {
     r.current.style.background = "#060506";
     fetchData(pa);
-    console.log(pa);
   }, [pa]);
+  useEffect(() => {
+    fetchUser();
+    setP((prev) => {
+      return prev.map((e) => ({ ...e, uid: user }));
+    });
+  }, [p, user]);
   return (
     <>
       <Nav r={r} />
@@ -223,7 +243,7 @@ function Shop() {
                 </>
               ) : (
                 <>
-                  {p.map((e) => {
+                  {p.map((e, index) => {
                     return (
                       <div className="relative text-white max-w-full flex flex-col justify-center items-center gap-1">
                         {e.sale ? (
@@ -257,8 +277,7 @@ function Shop() {
                         <button
                           className="mt-2 w-[90%] bg-[#8858ef] py-1 rounded-3xl text-base capitalize font-semibold"
                           onClick={() => {
-                            SendData(e);
-                            console.log(e);
+                            SendData(p[index]);
                             ca.current.style.width = "22vw";
                           }}
                         >

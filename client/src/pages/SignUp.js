@@ -16,10 +16,6 @@ function SignUp() {
   });
   const nav = useNavigate();
   const [cnfPass, setCnfPass] = useState(String);
-  const actionCodeSettings = {
-    url: "https://game-store-pearl.vercel.app",
-    handleCodeInApp: true,
-  };
   const provider = new GoogleAuthProvider();
   const signIn = async () => {
     await createUserWithEmailAndPassword(auth, userInfo.email, userInfo.pass)

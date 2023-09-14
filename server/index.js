@@ -13,8 +13,17 @@ const dataSchema = new mongoose.Schema({
   sale: Boolean,
   sale_price: Number,
 });
+const cartSchema = new mongoose.Schema({
+  name: String,
+  price: Number,
+  img: String,
+  tag: String,
+  sale: Boolean,
+  sale_price: Number,
+  uid: String,
+});
 const Data = mongoose.model("Data", dataSchema, "data");
-const Cart = mongoose.model("Cart", dataSchema);
+const Cart = mongoose.model("Cart", cartSchema);
 const server = async () => {
   await mongoose
     .connect(
@@ -52,6 +61,7 @@ app.post("/api/v1/cart", async (req, res) => {
       tag: a?.tag,
       sale: a?.sale,
       sale_price: a?.sale_price,
+      uid: a?.uid,
     });
     const q = await s.save();
     res.json(q);
@@ -78,4 +88,13 @@ app.delete("/api/v1/cart/:id", async (req, res) => {
     console.error(err);
   }
 });
+var cu;
+app.post("/api/v1/currentuser", (req, res) => {
+  const a = req.body;
+  cu = a;
+});
+app.get("/api/v1/currentuser", (req, res) => {
+  res.json(cu);
+});
+
 server();
