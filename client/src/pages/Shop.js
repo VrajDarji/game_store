@@ -85,7 +85,7 @@ function Shop() {
         "Content-Type": "application/json",
       },
     };
-    const url = "http://localhost:8080/api/v1/currentuser";
+    const url = "https://game-store-server.onrender.com/api/v1/currentuser";
     const response = await fetch(url, options);
     try {
       const result = await response.json();
